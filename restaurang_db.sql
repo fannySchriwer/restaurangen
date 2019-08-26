@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Aug 23, 2019 at 12:12 PM
+-- Generation Time: Aug 26, 2019 at 04:50 PM
 -- Server version: 5.7.25
 -- PHP Version: 7.3.1
 
@@ -27,6 +27,13 @@ CREATE TABLE `bookings` (
   `sitting` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`booking_ID`, `costumer_ID`, `guests`, `sitting`) VALUES
+(1, 1, 6, '2019-08-28 18:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -35,8 +42,8 @@ CREATE TABLE `bookings` (
 
 CREATE TABLE `configuration` (
   `tables` int(11) NOT NULL,
-  `sitting_one` int(11) NOT NULL,
-  `sitting_two` int(11) NOT NULL,
+  `sitting_one` time NOT NULL,
+  `sitting_two` time NOT NULL,
   `GDPR` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -45,7 +52,7 @@ CREATE TABLE `configuration` (
 --
 
 INSERT INTO `configuration` (`tables`, `sitting_one`, `sitting_two`, `GDPR`) VALUES
-(15, 18, 21, 'By clicking “I Agree” you consent that we will store provided information according the GDPR guidelines for storing and processing of your personal data.\r\nThe data will only be used for placing your booking and will not be shared with third parties.\r\nData is removed automatically after 30 days.\r\nAlternatively contact us by phone.');
+(15, '18:00:00', '21:00:00', 'By clicking “I Agree” you consent that we will store provided information according the GDPR guidelines for storing and processing of your personal data.\r\nThe data will only be used for placing your booking and will not be shared with third parties.\r\nData is removed automatically after 30 days.');
 
 -- --------------------------------------------------------
 
@@ -57,8 +64,15 @@ CREATE TABLE `costumers` (
   `costumer_ID` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `phone` int(11) NOT NULL
+  `phone` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `costumers`
+--
+
+INSERT INTO `costumers` (`costumer_ID`, `name`, `email`, `phone`) VALUES
+(1, 'Ulla-Britt', 'ulla@britt.com', '070123456');
 
 --
 -- Indexes for dumped tables
@@ -84,10 +98,10 @@ ALTER TABLE `costumers`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `costumers`
 --
 ALTER TABLE `costumers`
-  MODIFY `costumer_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `costumer_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
