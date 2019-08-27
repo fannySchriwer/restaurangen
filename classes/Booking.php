@@ -6,6 +6,20 @@
 		public function __construct($db) {
 			$this->conn = $db;
 		}
+
+		public function getBookedTables($date) {
+			$statement = $this->conn->prepare(
+				"SELECT bookings.*, booking_ID
+				FROM bookings
+                WHERE DATE(bookings.sitting) = :date ");
+				
+			$statement->execute([
+				':date' => $date
+			]);
+			$all_bookings = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+			return $all_bookings;
+		}
 	}
 
 	class BookingRow {

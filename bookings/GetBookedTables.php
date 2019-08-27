@@ -1,23 +1,13 @@
 <?php
 	include_once '../DBConnection.php';
+	include_once '../classes/Booking.php';
 
-	class GetBookedTables {
-		public $
+	$date = "2019-08-28";
 
-		public function __construct() {
+	$db = new Database();
+	$conn = $db->getConnection();
+	$freeBookings = new Booking($conn);
+	$getFreeBookings = $freeBookings->getBookedTables($date);
 
-			$this -> freeBookings();
-		}	
-		
-		public function freeBookings() {
-			$statement = $pdo->prepare(
-				"SELECT bookings.*, configuration.tables AS tables
-				FROM bookings
-				JOIN configuration");
-				
-			$statement->execute([
-			]);
-			$all_bookings = $statement->fetchAll(PDO::FETCH_ASSOC);
-		}
-	}		
+	echo(json_encode($getFreeBookings));
 ?>
