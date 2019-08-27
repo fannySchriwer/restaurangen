@@ -1,7 +1,7 @@
 <?php
-	class Bookings {
+	class Booking {
 		private $conn;
-		private $table_name = 'costumers';
+		private $table_name = 'bookings';
 
 		public function __construct($db) {
 			$this->conn = $db;
