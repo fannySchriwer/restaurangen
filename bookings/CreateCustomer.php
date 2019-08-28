@@ -33,16 +33,21 @@ if(
     $costumer->email = $data->email;
     $costumer->phone = $data->phone;
 
-    if($costumer->createCostumer()) {
+    // save the last insert id
+    if($lastId = $costumer->createCostumer()) {
         http_response_code(201);
+
+        // test
+        echo $lastId;
+
         echo json_encode(array("message" => "Product was created."));
     }
     else {
         http_response_code(503);
         echo json_encode(array("message" => "Unable to create product."));	
     }
-}
-else{
+} 
+else {
     http_response_code(400);
     echo json_encode(array("message" => "Unable to create product. Data is incomplete."));
 }

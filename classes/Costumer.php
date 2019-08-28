@@ -27,9 +27,9 @@
 			$statement->bindParam(":email", $this->email);
 			$statement->bindParam(":phone", $this->phone);
 			
-			if($statement->execute()) 
-			{
-				return true;
+			if($statement->execute()) {
+				$lastId = $this->connection->lastInsertId();
+				return $lastId;
 			}
 		
 			return false;
