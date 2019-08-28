@@ -8,6 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 require_once '../DBConnection.php';
 require_once '../classes/Costumer.php';
+require_once '../classes/Booking.php';
 
 // instantiate database
 $database = new Database();
@@ -37,19 +38,32 @@ if(
     if($lastId = $costumer->createCostumer()) {
         http_response_code(201);
 
-        // test
+        //TODO: remove test echo
         echo $lastId;
 
-        echo json_encode(array("message" => "Product was created."));
+        $booking = new Booking($db);
+        
+        // setting the last id/primary key from Customer table as property so it
+        // can become foreign key of Bookings table
+        $booking->costumer_ID = $lastId;
+        // setting the rest of properties regularly with data from post-req
+        $booking->guests = $data->guests;
+        $booking->sitting = $data->sitting;
+        
+        if ($booking->createBooking()) {
+               echo json_encode(array("message" => "Booking was also created."));
+        }
+
+        echo json_encode(array("message" => "Customer was created."));
     }
     else {
         http_response_code(503);
-        echo json_encode(array("message" => "Unable to create product."));	
+        echo json_encode(array("message" => "Unable to add customer."));	
     }
 } 
 else {
     http_response_code(400);
-    echo json_encode(array("message" => "Unable to create product. Data is incomplete."));
+    echo json_encode(array("message" => "Unable to add customer. Data is incomplete."));
 }
 
 echo "I work al the way down here!";

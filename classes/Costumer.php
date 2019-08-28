@@ -16,7 +16,12 @@
 		public function createCostumer() 
 		{
 			$statement = $this->connection->prepare(
-				"INSERT INTO costumers(name, email, phone) VALUES(:name, :email, :phone)");
+				"INSERT INTO 
+					costumers
+					(name, email, phone) 
+				VALUES
+					(:name, :email, :phone)
+				");
 
 			// sanitize
 			$this->$name = htmlspecialchars(strip_tags($this->$name));
@@ -28,8 +33,7 @@
 			$statement->bindParam(":phone", $this->phone);
 			
 			if($statement->execute()) {
-				$lastId = $this->connection->lastInsertId();
-				return $lastId;
+				return $this->connection->lastInsertId();
 			}
 		
 			return false;
