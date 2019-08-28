@@ -6,6 +6,16 @@
 		public function __construct($db) {
 			$this->conn = $db;
 		}
+
+		public function getBookedTables() {
+			$statement = $this->conn->prepare("SELECT * FROM configuration");
+				
+			$statement->execute([]);
+
+			$configuration = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+			return $configuration;
+		}
 	}
 
 	class ConfigurationRow {
