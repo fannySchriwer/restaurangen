@@ -8,6 +8,18 @@ class Booking {
 		$this->connection = $db;
 	}
 
+	public function deleteBooking($booking_ID) {
+
+		$delete_booking = $this->conn->prepare('DELETE FROM bookings WHERE booking_ID = :id');
+			
+		$deleted = $delete_booking->execute(
+			[
+				':id' => $booking_ID
+			]
+		);
+
+	}
+
 	public function updateBooking($booking_row) {
 
 		$sql = "UPDATE bookings SET costumer_ID = :costumer_ID, guests = :guests, sitting = :sitting WHERE booking_ID = :booking_ID";
@@ -22,11 +34,8 @@ class Booking {
 		$statement->bindParam(":sitting", $booking_row->sitting);
 				
 
-		if($statement->execute()) {
-			return true;
-		}
+		$statement->execute();
 
-        return false;
 	}
 }
 
