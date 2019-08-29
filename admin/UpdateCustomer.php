@@ -8,31 +8,24 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
  
 // include database and object file
 include_once '../DBConnection.php';
-include_once '../classes$costumer.php';
+include_once '../classes/Costumer.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
 
-$costumer = new Costumer($db);
-
 // Takes raw data from the request
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-$costumer_row = new $costumerRow();
-$costumer_row-$costumer_ID = $data->$costumer_ID;
+$costumer_row = new costumerRow();
+
+$costumer_row->costumer_ID = $data->costumer_ID;
 $costumer_row->name = $data->name;
 $costumer_row->email = $data->email;
 $costumer_row->phone = $data->phone;
 
-if($costumer->updat$costumer($costumer_row)) {    
-    echo json_encode(array("message" => "costumer was updated."));
-}
-else {
-    http_response_code(503);
-    echo json_encode(array("message" => "Unable to update costumer."));	
-}
-
+$costumer = new Costumer($db);
+$costumer->updateCostumer($costumer_row);
 
 ?>

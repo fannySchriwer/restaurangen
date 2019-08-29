@@ -5,40 +5,38 @@ class Costumer {
 	private $table_name = 'costumers';
 
 	public function __construct($db) {
-		$this->conn = $db;
+		$this->connection = $db;
 	}
 
 	public function deleteCostumer($costumer_ID) {
 
-		$delete_costumer = $this->connection->prepare('DELETE FROM costumers WHERE costumer_ID = :id');
+		$statement = $this->connection->prepare('DELETE FROM costumers WHERE costumer_ID = :id');
 			
-		$deleted = $delete_costumer->execute(
+		$statement->execute(
 			[
 				':id' => $costumer_ID
 			]
 		);
 
+		$count = $statement->rowCount();
+		return $count;
 	}
 
-	public function updateBooking($costumer_row) {
+	public function updateCostumer($costumer_row) {
 
-		$sql = "UPDATE costumers SET name = :name, email = :email, phone = :phone WHERE costumer_ID = :costumer_ID";
-		$statement = $this->pdo->prepare($sql);
-	
-		$costumer_row->$name = htmlspecialchars(strip_tags($costumer_row->$name));
-		$costumer_row->$email = htmlspecialchars(strip_tags($costumer_row->$email));
-		$costumer_row->$phone = htmlspecialchars(strip_tags($costumer_row->$phone));
-	
-		$statement->bindParam(":name", $costumer_row->name);
-		$statement->bindParam(":email", $costumer_row->email);
-		$statement->bindParam(":phone", $costumer_row->phone);
-					
-	
-		if($statement->execute()) {
-			return true;
-		}
-	
-		return false;
+		$statement = $this->connection->prepare("UPDATE costumers SET name = :name, email = :email, phone = :phone WHERE costumer_ID = :costumer_ID");
+
+		$statement->execute(
+			[
+				":costumer_ID" => $costumer_row->costumer_ID,
+				":name" => $costumer_row->name,
+				":email" => $costumer_row->email,
+				":phone" => $costumer_row->phone		
+			]
+		);
+
+		$count = $statement->rowCount();
+		return $count;
 	}
 }
 

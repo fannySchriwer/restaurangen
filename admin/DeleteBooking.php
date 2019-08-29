@@ -14,15 +14,7 @@ $data = json_decode($json);
 
 $booking_ID = $data->booking_ID;
 
-echo($booking_ID);
-
 $booking = new Booking($db);
-
-if($booking->deleteBooking($booking_ID)) {    
-    echo json_encode(array("message" => "Booking was deleted."));
-} else {
-    http_response_code(503);
-    echo json_encode(array("message" => "Unable to delete booking."));	
-}
+$booking->deleteBooking($booking_ID);
 
 ?>
