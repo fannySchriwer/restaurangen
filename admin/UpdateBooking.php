@@ -28,6 +28,4 @@ $booking_row->sitting = $data->sitting;
 $booking = new Booking($db);
 $booking->updateBooking($booking_row);
 
-
-
 ?>

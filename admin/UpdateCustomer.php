@@ -18,17 +18,12 @@ $db = $database->getConnection();
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-var_dump($data);
-
 $costumer_row = new CostumerRow();
 
 $costumer_row->costumer_ID = $data->costumer_ID;
 $costumer_row->name = $data->name;
 $costumer_row->email = $data->email;
 $costumer_row->phone = $data->phone;
-
-var_dump($costumer_row);
-
 
 $costumer = new Costumer($db);
 $costumer->updateCostumer($costumer_row);
