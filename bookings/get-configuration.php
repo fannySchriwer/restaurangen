@@ -20,5 +20,3 @@ $configurationRow->sitting_two = $getConfiguration[0]['sitting_two'];
 $configurationRow->GDPR = $getConfiguration[0]['GDPR'];
 
 echo(json_encode($configurationRow));
-
-echo(json_encode($getConfiguration));

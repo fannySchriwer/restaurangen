@@ -1,7 +1,6 @@
 <?php
 class Configuration {
 	private $conn;
-	private $table_name = 'configuration';
 
 	public function __construct($db) {
 		$this->conn = $db;

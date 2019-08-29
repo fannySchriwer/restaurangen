@@ -22,7 +22,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bookings` (
   `booking_ID` int(11) NOT NULL,
-  `costumer_ID` int(11) NOT NULL,
+  `customer_ID` int(11) NOT NULL,
   `guests` int(11) NOT NULL,
   `sitting` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -31,7 +31,7 @@ CREATE TABLE `bookings` (
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`booking_ID`, `costumer_ID`, `guests`, `sitting`) VALUES
+INSERT INTO `bookings` (`booking_ID`, `customer_ID`, `guests`, `sitting`) VALUES
 (1, 1, 6, '2019-08-28 18:00:00');
 
 -- --------------------------------------------------------
@@ -57,21 +57,21 @@ INSERT INTO `configuration` (`tables`, `sitting_one`, `sitting_two`, `GDPR`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `costumers`
+-- Table structure for table `customers`
 --
 
-CREATE TABLE `costumers` (
-  `costumer_ID` int(11) NOT NULL,
+CREATE TABLE `customers` (
+  `customer_ID` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `phone` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `costumers`
+-- Dumping data for table `customers`
 --
 
-INSERT INTO `costumers` (`costumer_ID`, `name`, `email`, `phone`) VALUES
+INSERT INTO `customers` (`customer_ID`, `name`, `email`, `phone`) VALUES
 (1, 'Ulla-Britt', 'ulla@britt.com', '070123456');
 
 --
@@ -85,10 +85,10 @@ ALTER TABLE `bookings`
   ADD PRIMARY KEY (`booking_ID`);
 
 --
--- Indexes for table `costumers`
+-- Indexes for table `customers`
 --
-ALTER TABLE `costumers`
-  ADD PRIMARY KEY (`costumer_ID`);
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`customer_ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -101,7 +101,7 @@ ALTER TABLE `bookings`
   MODIFY `booking_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `costumers`
+-- AUTO_INCREMENT for table `customers`
 --
-ALTER TABLE `costumers`
-  MODIFY `costumer_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `customers`
+  MODIFY `customer_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
