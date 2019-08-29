@@ -28,6 +28,7 @@ if(
     !empty($data->email) &&
     !empty($data->phone) 
 ){
+    // TODO: remove
     echo "I got into trying to set the variables!";
 
     $costumer->name = $data->name;
@@ -38,19 +39,21 @@ if(
     if($lastId = $costumer->createCostumer()) {
         http_response_code(201);
 
-        //TODO: remove test echo
+        //TODO: remove
         echo $lastId;
 
         $booking = new Booking($db);
+
+        $booking_row = new BookingRow();
         
         // setting the last id/primary key from Customer table as property so it
         // can become foreign key of Bookings table
-        $booking->costumer_ID = $lastId;
+        $booking_row->costumer_ID = 4;
         // setting the rest of properties regularly with data from post-req
-        $booking->guests = $data->guests;
-        $booking->sitting = $data->sitting;
+        $booking_row->guests = $data->guests;
+        $booking_row->sitting = $data->sitting;
         
-        if ($booking->createBooking()) {
+        if ($booking->createBooking($booking_row)) {
                echo json_encode(array("message" => "Booking was also created."));
         }
 
@@ -66,5 +69,6 @@ else {
     echo json_encode(array("message" => "Unable to add customer. Data is incomplete."));
 }
 
+//TODO: remove
 echo "I work al the way down here!";
 ?>

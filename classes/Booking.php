@@ -4,16 +4,12 @@
 		private $connection;
 		private $table_name = 'bookings';
 
-		public $costumer_ID;
-		public $guests;
-		public $sitting;
-
 		public function __construct($db) 
 		{
 			$this->connection = $db;
 		}
 
-		public function createBooking() 
+		public function createBooking($booking_row) 
 		{
 			$statement = $this->connection->prepare(
 				"INSERT INTO 
@@ -24,13 +20,19 @@
 				"); 
 
 			// sanitize
-			$this->$costumer_ID = htmlspecialchars(strip_tags($this->$costumer_ID));
-			$this->$guests = htmlspecialchars(strip_tags($this->$guests));
-			$this->$sitting = htmlspecialchars(strip_tags($this->$sitting));
+			$booking_row->$costumer_ID = htmlspecialchars(
+				strip_tags($booking_row->$costumer_ID)
+			);
+			$booking_row->$guests = htmlspecialchars(
+				strip_tags($booking_row->$guests)
+			);
+			$booking_row->$sitting = htmlspecialchars(
+				strip_tags($booking_row->$sitting)
+			);
 
-			$statement->bindParam(":costumer_ID", $this->costumer_ID);
-			$statement->bindParam(":guests", $this->guests);
-			$statement->bindParam(":sitting", $this->sitting);
+			$statement->bindParam(":costumer_ID", $booking_row->costumer_ID);
+			$statement->bindParam(":guests", $booking_row->guests);
+			$statement->bindParam(":sitting", $booking_row->sitting);
 
 			if ($statement->execute()) {
 				return true;
@@ -38,5 +40,13 @@
 
 			return false;
 		}
+	}
+
+	class BookingRow 
+	{
+		public $booking_ID;
+		public $costumer_ID;
+		public $guests;
+		public $sitting;
 	}
 ?>
