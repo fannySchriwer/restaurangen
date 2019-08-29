@@ -18,25 +18,21 @@ $costumer = new Costumer($db);
 
 // Takes raw data from the request
 $json = file_get_contents('php://input');
-// Converts it into a PHP object
 $data = json_decode($json);
 
-if(!empty($data->name) && !empty($data->email) && !empty($data->phone)) {
+$costumer_row = new $costumerRow();
+$costumer_row-$costumer_ID = $data->$costumer_ID;
+$costumer_row->name = $data->name;
+$costumer_row->email = $data->email;
+$costumer_row->phone = $data->phone;
 
-    $costumer_row = new $costumerRow();
-    $costumer_row-$costumer_ID = $data->$costumer_ID;
-    $costumer_row->name = $data->name;
-    $costumer_row->email = $data->email;
-    $costumer_row->phone = $data->phone;
-
-    if($costumer->updat$costumer($costumer_row)) {    
-        echo json_encode(array("message" => "costumer was updated."));
-    }
-    else {
-        http_response_code(503);
-        echo json_encode(array("message" => "Unable to update costumer."));	
-    }
-} 
+if($costumer->updat$costumer($costumer_row)) {    
+    echo json_encode(array("message" => "costumer was updated."));
+}
+else {
+    http_response_code(503);
+    echo json_encode(array("message" => "Unable to update costumer."));	
+}
 
 
 ?>

@@ -18,25 +18,22 @@ $booking = new Booking($db);
 
 // Takes raw data from the request
 $json = file_get_contents('php://input');
-// Converts it into a PHP object
 $data = json_decode($json);
 
-if(!empty($data->costumer_ID) && !empty($data->guests) && !empty($data->sitting)) {
 
-    $booking_row = new BookingRow();
-    $booking_row->booking_ID = $data->booking_ID;
-    $booking_row->costumer_ID = $data->costumer_ID;
-    $booking_row->guests = $data->guests;
-    $booking_row->sitting = $data->sitting;
+$booking_row = new BookingRow();
+$booking_row->booking_ID = $data->booking_ID;
+$booking_row->costumer_ID = $data->costumer_ID;
+$booking_row->guests = $data->guests;
+$booking_row->sitting = $data->sitting;
 
-    if($booking->updateBooking($booking_row)) {    
-        echo json_encode(array("message" => "Booking was updated."));
-    }
-    else {
-        http_response_code(503);
-        echo json_encode(array("message" => "Unable to update booking."));	
-    }
-} 
+if($booking->updateBooking($booking_row)) {    
+    echo json_encode(array("message" => "Booking was updated."));
+}
+else {
+    http_response_code(503);
+    echo json_encode(array("message" => "Unable to update booking."));	
+}
 
 
 ?>

@@ -1,11 +1,23 @@
 <?php
 
 class Costumer {
-	private $conn;
+	private $connection;
 	private $table_name = 'costumers';
 
 	public function __construct($db) {
 		$this->conn = $db;
+	}
+
+	public function deleteCostumer($costumer_ID) {
+
+		$delete_costumer = $this->connection->prepare('DELETE FROM costumers WHERE costumer_ID = :id');
+			
+		$deleted = $delete_costumer->execute(
+			[
+				':id' => $costumer_ID
+			]
+		);
+
 	}
 
 	public function updateBooking($costumer_row) {
