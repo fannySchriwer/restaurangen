@@ -4,27 +4,25 @@ class Booking
 	private $connection;
 	private $table_name = 'bookings';
 
-		public function __construct($db) {
-			$this->connection = $db;
-		}
+	public function __construct($db) {
+		$this->connection = $db;
+	}
 
-		public function getBookings() {
-			// select all query
-			$bookingToCollect = "SELECT * FROM bookings
-				LEFT JOIN costumers
-				ON bookings.costumer_ID = costumers.costumer_ID";
+	public function getBookings() {
+		// select all query
+		$bookingToCollect = "SELECT * FROM bookings
+			LEFT JOIN costumers
+			ON bookings.costumer_ID = costumers.costumer_ID";
 
-			// prepare query statement
-			$bookingResults = $this->connection->prepare($bookingToCollect);
+		// prepare query statement
+		$bookingResults = $this->connection->prepare($bookingToCollect);
 
-			// execute query
-			$bookingResults->execute();
-			
-			$all_bookings = $bookingResults->fetch(PDO::FETCH_ASSOC);
+		// execute query
+		$bookingResults->execute();
+		
+		$all_bookings = $bookingResults->fetch(PDO::FETCH_ASSOC);
 
-			return $all_bookings;
-		}
-
+		return $all_bookings;
 	}
 
 	public function createBooking($booking_row) 
