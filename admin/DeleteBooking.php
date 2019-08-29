@@ -14,6 +14,8 @@ $data = json_decode($json);
 
 $booking_ID = $data->booking_ID;
 
+var_dump($booking_ID);
+
 $booking = new Booking($db);
 $booking->deleteBooking($booking_ID);
 

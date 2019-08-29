@@ -10,11 +10,7 @@ class Booking {
 
 	public function deleteBooking($booking_ID) {
 
-		$delete_booking = $this->connection->prepare(
-			"DELETE bookings, costumers FROM bookings 
-			INNER JOIN costumers ON bookings.booking_ID, costumers.booking_ID 
-			WHERE booking_ID = :booking_ID"
-		);
+		$delete_booking = $this->connection->prepare("DELETE bookings, costumers FROM bookings INNER JOIN costumers ON bookings.costumer_ID = costumers.costumer_ID WHERE booking_ID = :booking_ID");
 		
 		$delete_booking->execute(
 			[
@@ -23,6 +19,7 @@ class Booking {
 		);
 
 		$count = $delete_booking->rowCount();
+		echo('Deleted' . ' ' . $count . ' ' . 'rows  in total');
 
 		return $count;
 
@@ -30,7 +27,10 @@ class Booking {
 
 	public function updateBooking($booking_row) {
 		
-		$statement = $this->connection->prepare("UPDATE bookings SET costumer_ID = :costumer_ID, guests = :guests, sitting = :sitting WHERE booking_ID = :booking_ID");				
+		$statement = $this->connection->prepare(
+			"UPDATE bookings SET costumer_ID = :costumer_ID, guests = :guests, sitting = :sitting
+			WHERE booking_ID = :booking_ID"
+		);				
 
 		$statement->execute(
 			[
