@@ -10,7 +10,11 @@ class Booking {
 
 	public function deleteBooking($booking_ID) {
 
-		$delete_booking = $this->connection->prepare("DELETE FROM bookings WHERE booking_ID = :booking_ID");
+		$delete_booking = $this->connection->prepare(
+			"DELETE bookings, costumers FROM bookings 
+			INNER JOIN costumers ON bookings.booking_ID, costumers.booking_ID 
+			WHERE booking_ID = :booking_ID"
+		);
 		
 		$delete_booking->execute(
 			[
@@ -19,22 +23,6 @@ class Booking {
 		);
 
 		$count = $delete_booking->rowCount();
-
-		return $count;
-
-	}
-
-	public function deleteCostumer($booking_ID) {
-
-		$delete_costumer = $this->connection->prepare("DELETE FROM costumers WHERE booking_ID = :booking_ID");
-		
-		$delete_costumer->execute(
-			[
-				":booking_ID" => $booking_ID
-			]
-		);
-
-		$count = $delete_costumer->rowCount();
 
 		return $count;
 

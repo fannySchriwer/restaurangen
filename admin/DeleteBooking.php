@@ -16,5 +16,5 @@ $booking_ID = $data->booking_ID;
 
 $booking = new Booking($db);
 $booking->deleteBooking($booking_ID);
-$booking->deleteCostumer($booking_ID);
+
 ?>
