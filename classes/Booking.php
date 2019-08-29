@@ -10,17 +10,16 @@ class Booking {
 
 	public function deleteBooking($booking_ID) {
 
-		$delete_booking = $this->connection->prepare('DELETE FROM bookings WHERE booking_ID = :booking_ID');
+		$delete_booking = $this->connection->prepare("DELETE FROM bookings WHERE booking_ID = :booking_ID");
 
-		$booking_row->$booking_ID = htmlspecialchars(strip_tags($booking_row->$booking_ID));
-		$statement->bindParam(":booking_ID", $booking_row->booking_ID);
-			
-		$deleted = $delete_booking->execute(
+		//$booking_ID = htmlspecialchars(strip_tags($booking_ID));
+		//$statement->bindParam(":booking_ID", $booking_ID);
+		
+		$delete_booking->execute(
 			[
-				':booking_ID' => $booking_ID
+				":booking_ID" => $booking_ID
 			]
 		);
-		return $deleted;
 
 	}
 
