@@ -20,7 +20,7 @@ class Booking
 		// execute query
 		$bookingResults->execute();
 		
-		$all_bookings = $bookingResults->fetch(PDO::FETCH_ASSOC);
+		$all_bookings = $bookingResults->fetchAll(PDO::FETCH_ASSOC);
 
 		return $all_bookings;
 	}
