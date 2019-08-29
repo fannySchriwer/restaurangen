@@ -24,6 +24,22 @@ class Booking {
 
 	}
 
+	public function deleteCostumer($booking_ID) {
+
+		$delete_costumer = $this->connection->prepare("DELETE FROM costumers WHERE booking_ID = :booking_ID");
+		
+		$delete_costumer->execute(
+			[
+				":booking_ID" => $booking_ID
+			]
+		);
+
+		$count = $delete_costumer->rowCount();
+
+		return $count;
+
+	}
+
 	public function updateBooking($booking_row) {
 		
 		$statement = $this->connection->prepare("UPDATE bookings SET costumer_ID = :costumer_ID, guests = :guests, sitting = :sitting WHERE booking_ID = :booking_ID");				
