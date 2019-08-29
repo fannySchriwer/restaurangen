@@ -24,7 +24,7 @@ $data = json_decode($json);
 if(!empty($data->costumer_ID) && !empty($data->guests) && !empty($data->sitting)) {
 
     $booking_row = new BookingRow();
-    $booking_row->booking_ID = 1;
+    $booking_row->booking_ID = $data->booking_ID;
     $booking_row->costumer_ID = $data->costumer_ID;
     $booking_row->guests = $data->guests;
     $booking_row->sitting = $data->sitting;

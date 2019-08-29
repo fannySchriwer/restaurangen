@@ -24,7 +24,7 @@ $data = json_decode($json);
 if(!empty($data->name) && !empty($data->email) && !empty($data->phone)) {
 
     $costumer_row = new $costumerRow();
-    $costumer_row-$costumer_ID = 1;
+    $costumer_row-$costumer_ID = $data->$costumer_ID;
     $costumer_row->name = $data->name;
     $costumer_row->email = $data->email;
     $costumer_row->phone = $data->phone;
