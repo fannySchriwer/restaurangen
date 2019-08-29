@@ -31,12 +31,14 @@ if(
     // TODO: remove
     echo "I got into trying to set the variables!";
 
-    $costumer->name = $data->name;
-    $costumer->email = $data->email;
-    $costumer->phone = $data->phone;
+    $costumer_row = new CostumerRow();
+
+    $costumer_row->name = $data->name;
+    $costumer_row->email = $data->email;
+    $costumer_row->phone = $data->phone;
 
     // save the last insert id
-    if($lastId = $costumer->createCostumer()) {
+    if($lastId = $costumer->createCostumer($costumer_row)) {
         http_response_code(201);
 
         //TODO: remove
@@ -48,7 +50,7 @@ if(
         
         // setting the last id/primary key from Customer table as property so it
         // can become foreign key of Bookings table
-        $booking_row->costumer_ID = 4;
+        $booking_row->costumer_ID = $lastId;
         // setting the rest of properties regularly with data from post-req
         $booking_row->guests = $data->guests;
         $booking_row->sitting = $data->sitting;
