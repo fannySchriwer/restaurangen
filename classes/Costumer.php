@@ -4,16 +4,12 @@
 		private $connection;
 		private $table_name = 'costumers';
 
-		public $name;
-		public $email;
-		public $phone;
-
 		public function __construct($db) 
 		{
 			$this->connection = $db;
 		}
 
-		public function createCostumer() 
+		public function createCostumer($customer_row) 
 		{
 			$statement = $this->connection->prepare(
 				"INSERT INTO 
@@ -24,13 +20,13 @@
 				");
 
 			// sanitize
-			$this->$name = htmlspecialchars(strip_tags($this->$name));
-			$this->$email = htmlspecialchars(strip_tags($this->$email));
-			$this->$phone = htmlspecialchars(strip_tags($this->$phone));
+			$customer_row->$name = htmlspecialchars(strip_tags($customer_row->$name));
+			$customer_row->$email = htmlspecialchars(strip_tags($customer_row->$email));
+			$customer_row->$phone = htmlspecialchars(strip_tags($customer_row->$phone));
 
-			$statement->bindParam(":name", $this->name);
-			$statement->bindParam(":email", $this->email);
-			$statement->bindParam(":phone", $this->phone);
+			$statement->bindParam(":name", $customer_row->name);
+			$statement->bindParam(":email", $customer_row->email);
+			$statement->bindParam(":phone", $customer_row->phone);
 			
 			if($statement->execute()) {
 				return $this->connection->lastInsertId();
@@ -39,4 +35,12 @@
 			return false;
 		}
 	}
+
+class CostumerRow 
+{
+	public $costumer_ID;
+	public $name;
+	public $email;
+	public $phone;
+}
 

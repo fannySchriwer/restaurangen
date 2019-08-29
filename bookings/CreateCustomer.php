@@ -31,12 +31,14 @@ if(
     // TODO: remove
     echo "I got into trying to set the variables!";
 
-    $costumer->name = $data->name;
-    $costumer->email = $data->email;
-    $costumer->phone = $data->phone;
+    $costumer_row = new BookingRow();
+
+    $costumer_row->name = $data->name;
+    $costumer_row->email = $data->email;
+    $costumer_row->phone = $data->phone;
 
     // save the last insert id
-    if($lastId = $costumer->createCostumer()) {
+    if($lastId = $costumer->createCostumer($costumer_row)) {
         http_response_code(201);
 
         //TODO: remove
