@@ -28,9 +28,6 @@ if(
     !empty($data->email) &&
     !empty($data->phone) 
 ){
-    // TODO: remove
-    echo "I got into trying to set the variables!";
-
     $costumer_row = new CostumerRow();
 
     $costumer_row->name = $data->name;
@@ -40,9 +37,6 @@ if(
     // save the last insert id
     if($lastId = $costumer->createCostumer($costumer_row)) {
         http_response_code(201);
-
-        //TODO: remove
-        echo $lastId;
 
         $booking = new Booking($db);
 
@@ -70,7 +64,4 @@ else {
     http_response_code(400);
     echo json_encode(array("message" => "Unable to add customer. Data is incomplete."));
 }
-
-//TODO: remove
-echo "I work al the way down here!";
 ?>
