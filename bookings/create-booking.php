@@ -50,7 +50,7 @@ if(
         $booking_row->guests = $data->guests;
         $booking_row->sitting = $data->sitting;
         
-        if ($booking->createBooking($booking_row)) {
+        if($booking->createBooking($booking_row)) {
             echo json_encode(array('message' => 'Booking was also created.'));
         }
 
