@@ -2,56 +2,58 @@
 
 class Booking {
 	private $connection;
-	private $table_name = 'bookings';
 
 	public function __construct($db) {
 		$this->connection = $db;
 	}
 
 	public function deleteBooking($booking_ID) {
-
-		$delete_booking = $this->connection->prepare("DELETE bookings, costumers FROM bookings INNER JOIN costumers ON bookings.costumer_ID = costumers.costumer_ID WHERE booking_ID = :booking_ID");
+		$delete_booking = $this->connection->prepare(
+			'DELETE bookings, customers 
+			FROM bookings 
+			INNER JOIN customers 
+			ON bookings.customer_ID = customers.customer_ID 
+			WHERE booking_ID = :booking_ID'
+		);
 		
 		$delete_booking->execute(
 			[
-				":booking_ID" => $booking_ID
+				':booking_ID' => $booking_ID
 			]
 		);
 
 		$count = $delete_booking->rowCount();
-		echo('Deleted' . ' ' . $count . ' ' . 'rows  in total');
 
 		return $count;
-
 	}
 
 	public function updateBooking($booking_row) {
-		
 		$statement = $this->connection->prepare(
-			"UPDATE bookings SET costumer_ID = :costumer_ID, guests = :guests, sitting = :sitting
-			WHERE booking_ID = :booking_ID"
+			'UPDATE bookings 
+			SET customer_ID = :customer_ID, 
+				guests = :guests, 
+				sitting = :sitting
+			WHERE booking_ID = :booking_ID'
 		);				
 
 		$statement->execute(
 			[
-				":booking_ID" => $booking_row->booking_ID,
-				":costumer_ID" => $booking_row->costumer_ID,
-				":guests" => $booking_row->guests,
-				":sitting" => $booking_row->sitting				
+				':booking_ID' => $booking_row->booking_ID,
+				':customer_ID' => $booking_row->customer_ID,
+				':guests' => $booking_row->guests,
+				':sitting' => $booking_row->sitting				
 			]
 		);
 
 		$count = $statement->rowCount();
 
 		return $count;
-
 	}
 
 	public function getBookedTables($date) {
 		$statement = $this->connection->prepare(
-			"SELECT bookings.*, booking_ID
-			FROM bookings
-			WHERE DATE(bookings.sitting) = :date ");
+			'SELECT * FROM bookings WHERE DATE(sitting) = :date'
+		);
 			
 		$statement->execute([
 			':date' => $date
@@ -62,34 +64,30 @@ class Booking {
 	}
 
 	public function getBookings() {
-		// select all query
-		$bookingToCollect = "SELECT * FROM bookings
-			LEFT JOIN costumers
-			ON bookings.costumer_ID = costumers.costumer_ID";
-
-		// prepare query statement
-		$bookingResults = $this->connection->prepare($bookingToCollect);
+		// select all and prepare query statement
+		$booking_results = $this->connection->prepare(
+			'SELECT * FROM bookings
+			LEFT JOIN customers
+			ON bookings.customer_ID = customers.customer_ID'
+		);
 
 		// execute query
-		$bookingResults->execute();
+		$booking_results->execute();
 		
-		$all_bookings = $bookingResults->fetchAll(PDO::FETCH_ASSOC);
+		$all_bookings = $booking_results->fetchAll(PDO::FETCH_ASSOC);
 
 		return $all_bookings;
 	}
 
 	public function createBooking($booking_row) {
 		$statement = $this->connection->prepare(
-			"INSERT INTO 
-				bookings
-				(costumer_ID, guests, sitting) 
-			VALUES
-				(:costumer_ID, :guests, :sitting)
-			"); 
+			'INSERT INTO bookings (customer_ID, guests, sitting) 
+			VALUES (:customer_ID, :guests, :sitting)'
+		); 
 
 		// sanitize
-		$booking_row->$costumer_ID = htmlspecialchars(
-			strip_tags($booking_row->$costumer_ID)
+		$booking_row->$customer_ID = htmlspecialchars(
+			strip_tags($booking_row->$customer_ID)
 		);
 		$booking_row->$guests = htmlspecialchars(
 			strip_tags($booking_row->$guests)
@@ -98,9 +96,9 @@ class Booking {
 			strip_tags($booking_row->$sitting)
 		);
 
-		$statement->bindParam(":costumer_ID", $booking_row->costumer_ID);
-		$statement->bindParam(":guests", $booking_row->guests);
-		$statement->bindParam(":sitting", $booking_row->sitting);
+		$statement->bindParam(':customer_ID', $booking_row->customer_ID);
+		$statement->bindParam(':guests', $booking_row->guests);
+		$statement->bindParam(':sitting', $booking_row->sitting);
 
 		if ($statement->execute()) {
 			return true;
@@ -108,12 +106,11 @@ class Booking {
 
 		return false;
 	}
-
 }
 
 class BookingRow {
 	public $booking_ID;
-	public $costumer_ID;
+	public $customer_ID;
 	public $guests;
 	public $sitting;
 }

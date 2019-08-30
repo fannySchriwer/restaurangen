@@ -1,7 +1,6 @@
 <?php
 
 class Database {
-
     private $host = 'localhost';
     private $db_name = 'restaurang';
     private $username = 'root';
@@ -12,15 +11,18 @@ class Database {
         $this->connection = null;
 
         try {
-
-            $this->connection = new PDO("mysql:host=" . $this->host . "; dbname=" . $this->db_name, $this->username, $this->password);
-            $this->connection->exec("set names utf8");
-        } catch(PDOException $exception) {
-            echo "Connection error: " . $exception->getMessage();
+            $this->connection = new PDO(
+				'mysql:host=' . $this->host . 
+				'; dbname=' . $this->db_name, 
+				$this->username, 
+				$this->password
+			);
+            $this->connection->exec('set names utf8');
+		} 
+		catch(PDOException $exception) {
+            echo 'Connection error: ' . $exception->getMessage();
         }
 
         return $this->connection;
     }
 }
-
-?>

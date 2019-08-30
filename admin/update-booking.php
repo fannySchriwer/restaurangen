@@ -8,7 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
  
 // include database and object file
 include_once '../DBConnection.php';
-include_once '../classes/Costumer.php';
+include_once '../classes/Booking.php';
  
 // get database connection
 $database = new Database();
@@ -18,14 +18,12 @@ $db = $database->getConnection();
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-$costumer_row = new CostumerRow();
+$booking_row = new BookingRow();
 
-$costumer_row->costumer_ID = $data->costumer_ID;
-$costumer_row->name = $data->name;
-$costumer_row->email = $data->email;
-$costumer_row->phone = $data->phone;
+$booking_row->booking_ID = $data->booking_ID;
+$booking_row->customer_ID = $data->customer_ID;
+$booking_row->guests = $data->guests;
+$booking_row->sitting = $data->sitting;
 
-$costumer = new Costumer($db);
-$costumer->updateCostumer($costumer_row);
-
-?>
+$booking = new Booking($db);
+$booking->updateBooking($booking_row);
