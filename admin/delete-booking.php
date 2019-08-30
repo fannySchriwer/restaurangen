@@ -18,7 +18,13 @@ $db = $database->getConnection();
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-$booking_ID = $data->booking_ID;
-
-$booking = new Booking($db);
-$booking->deleteBooking($booking_ID);
+if(!empty($data->booking_ID)) {
+    $booking_ID = $data->booking_ID;
+    
+    $booking = new Booking($db);
+    $booking->deleteBooking($booking_ID);
+}
+else {
+    http_response_code(400);
+    echo json_encode(array('message' => 'Unable to add customer. Data is incomplete.'));
+}
