@@ -1,4 +1,5 @@
 <?php
+
 include_once '../DBConnection.php';
 include_once '../classes/Booking.php';
 
@@ -16,20 +17,20 @@ $json = file_get_contents('php://input');
 $data = json_decode($json); 
 
 if(!empty($data->date)) {
-	$getFreeBookings = $bookings->getBookedTables($data->date);
+	$get_free_bookings = $bookings->getBookedTables($data->date);
 
-	if(!$getFreeBookings == []){
+	if(!$get_free_bookings == []){
 		
-		$returnFreeBookings = [];
-		$bookingRow = new BookingRow();
+		$return_free_bookings = [];
+		$booking_row = new BookingRow();
 
-		for($i = 0; $i < count($getFreeBookings); $i++){
-			$bookingRow->booking_ID = $getFreeBookings[$i]['booking_ID'];
-			$bookingRow->customer_ID = $getFreeBookings[$i]['customer_ID'];
-			$bookingRow->guests = $getFreeBookings[$i]['guests'];
-			$bookingRow->sitting = $getFreeBookings[$i]['sitting'];
+		for($i = 0; $i < count($get_free_bookings); $i++){
+			$booking_row->booking_ID = $get_free_bookings[$i]['booking_ID'];
+			$booking_row->customer_ID = $get_free_bookings[$i]['customer_ID'];
+			$booking_row->guests = $get_free_bookings[$i]['guests'];
+			$booking_row->sitting = $get_free_bookings[$i]['sitting'];
 
-			array_push($returnFreeBookings,$bookingRow);
+			array_push($return_free_bookings, $booking_row);
 		}
 		http_response_code(200);
 	}
@@ -38,8 +39,8 @@ if(!empty($data->date)) {
 	}
 }
 else {
-	$returnFreeBookings = null;
+	$return_free_bookings = null;
 	http_response_code(400);
 }
 
-echo(json_encode($returnFreeBookings));
+echo(json_encode($return_free_bookings));

@@ -24,9 +24,6 @@ class Booking {
 
 		$count = $delete_booking->rowCount();
 
-		// ==== Ska denna va kvar?
-		echo('Deleted' . ' ' . $count . ' ' . 'rows  in total');
-
 		return $count;
 	}
 
@@ -67,28 +64,17 @@ class Booking {
 	}
 
 	public function getBookings() {
-
-		// ==== inkonsekvent?
-
-		// select all query
-		// $bookingToCollect = 'SELECT * FROM bookings
-		// 	LEFT JOIN customers
-		// 	ON bookings.customer_ID = customers.customer_ID';
-
-		// prepare query statement
-		// $bookingResults = $this->connection->prepare($bookingToCollect);
-
 		// select all and prepare query statement
-		$bookingResults = $this->connection->prepare(
+		$booking_results = $this->connection->prepare(
 			'SELECT * FROM bookings
 			LEFT JOIN customers
 			ON bookings.customer_ID = customers.customer_ID'
 		);
 
 		// execute query
-		$bookingResults->execute();
+		$booking_results->execute();
 		
-		$all_bookings = $bookingResults->fetchAll(PDO::FETCH_ASSOC);
+		$all_bookings = $booking_results->fetchAll(PDO::FETCH_ASSOC);
 
 		return $all_bookings;
 	}

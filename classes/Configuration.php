@@ -1,4 +1,5 @@
 <?php
+
 class Configuration {
 	private $conn;
 
@@ -7,7 +8,9 @@ class Configuration {
 	}
 
 	public function getConfigurationTable() {
-		$statement = $this->conn->prepare("SELECT * FROM configuration");
+		$statement = $this->conn->prepare('
+			SELECT * FROM configuration'
+		);
 			
 		$statement->execute([]);
 
