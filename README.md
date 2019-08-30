@@ -36,7 +36,7 @@ Class CoolClass {
 
 }
 
-functionName($parameter_one, $parameter_two) {
+function functionName($parameter_one, $parameter_two) {
 	$variable_name = 'String with single quotes';
 
 	if() {
@@ -46,7 +46,7 @@ functionName($parameter_one, $parameter_two) {
 
 	}
 
-	secondFunction() {
+	function secondFunction() {
 
 	}
 }
