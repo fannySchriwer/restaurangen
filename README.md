@@ -15,7 +15,7 @@
 * PHP code MUST use the long <?php ?> tags or the short-echo <?= ?> tags.
 
 ## Properties
-* Use $camelCase property names, unless otherwise stated ()
+* Use $under_score property names, unless otherwise stated ()
 
 ## Methods
 * Method names MUST be declared in camelCase().
