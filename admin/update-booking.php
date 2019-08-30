@@ -27,6 +27,7 @@ if(!empty($data->booking_ID) && !empty($data->customer_ID) && !empty($data->gues
     $booking_row->sitting = $data->sitting;
 
     $booking = new Booking($db);
+    
     if($booking->updateBooking($booking_row)) {
         echo json_encode(array('message' => 'Booking was updated succesfully'));
     } 
