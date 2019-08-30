@@ -16,15 +16,17 @@ class Booking {
 			WHERE booking_ID = :booking_ID'
 		);
 		
-		$delete_booking->execute(
+		if($delete_booking->execute(
 			[
 				':booking_ID' => $booking_ID
 			]
-		);
+		)) {
+			return true;
+		}
 
 		$count = $delete_booking->rowCount();
 
-		return $count;
+		return false;
 	}
 
 	public function updateBooking($booking_row) {

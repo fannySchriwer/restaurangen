@@ -22,9 +22,11 @@ if(!empty($data->booking_ID)) {
     $booking_ID = $data->booking_ID;
     
     $booking = new Booking($db);
-    $booking->deleteBooking($booking_ID);
+    if($booking->deleteBooking($booking_ID)) {
+        echo json_encode(array('message' => 'Booking was deleted succesfully'));
+    }
 }
 else {
     http_response_code(400);
-    echo json_encode(array('message' => 'Unable to add customer. Data is incomplete.'));
+    echo json_encode(array('message' => 'Unable to delete booking. Data is incomplete.'));
 }
