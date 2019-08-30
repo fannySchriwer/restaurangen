@@ -12,11 +12,14 @@ $configuration = new Configuration($db);
 
 $get_configuration = $configuration->getConfigurationTable();
 
-$configuration_row = new ConfigurationRow();
+$return_configuration = [];
 
-$configuration_row->tables = $get_configuration[0]['tables'];
-$configuration_row->sitting_one = $get_configuration[0]['sitting_one'];
-$configuration_row->sitting_two = $get_configuration[0]['sitting_two'];
-$configuration_row->GDPR = $get_configuration[0]['GDPR'];
+for($i = 0; $i < count($get_configuration); $i++) {
+	$configuration_row = new ConfigurationRow();
+	$configuration_row->key = $get_configuration[$i]['config_key'];
+	$configuration_row->value = $get_configuration[$i]['value'];
 
-echo(json_encode($configuration_row));
+	array_push($return_configuration, $configuration_row);
+}
+
+echo(json_encode($return_configuration));

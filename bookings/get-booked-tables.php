@@ -24,7 +24,7 @@ if(!empty($data->date)) {
 		$return_free_bookings = [];
 		$booking_row = new BookingRow();
 
-		for($i = 0; $i < count($get_free_bookings); $i++){
+		for($i = 0; $i < count($get_free_bookings); $i++) {
 			$booking_row->booking_ID = $get_free_bookings[$i]['booking_ID'];
 			$booking_row->customer_ID = $get_free_bookings[$i]['customer_ID'];
 			$booking_row->guests = $get_free_bookings[$i]['guests'];

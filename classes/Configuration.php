@@ -1,14 +1,14 @@
 <?php
 
 class Configuration {
-	private $conn;
+	private $connection;
 
 	public function __construct($db) {
-		$this->conn = $db;
+		$this->connection = $db;
 	}
 
 	public function getConfigurationTable() {
-		$statement = $this->conn->prepare('
+		$statement = $this->connection->prepare('
 			SELECT * FROM configuration'
 		);
 			
@@ -21,8 +21,6 @@ class Configuration {
 }
 
 class ConfigurationRow {
-	public $tables;
-	public $sitting_one;
-	public $sitting_two;
-	public $GDPR;
+	public $key;
+	public $value;
 }

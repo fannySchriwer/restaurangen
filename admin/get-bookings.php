@@ -17,7 +17,7 @@ if(!isset ($booking_results)) {
     http_response_code(404);
  
     echo json_encode(
-        array('message' => 'No products found.')
+        array('message' => 'No bookings found.')
     );
 }
 else {
