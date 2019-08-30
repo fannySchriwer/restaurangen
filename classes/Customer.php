@@ -7,21 +7,6 @@ class Customer {
 		$this->connection = $db;
 	}
 
-	public function deleteCustomer($customer_ID) {
-		$statement = $this->connection->prepare(
-			'DELETE FROM customers WHERE customer_ID = :id'
-		);
-			
-		$statement->execute(
-			[
-				':id' => $customer_ID
-			]
-		);
-
-		$count = $statement->rowCount();
-		return $count;
-	}
-
 	public function updateCustomer($customer_row) {
 		$statement = $this->connection->prepare(
 			'UPDATE customers 
@@ -30,17 +15,18 @@ class Customer {
 				phone = :phone 
 			WHERE customer_ID = :customer_ID');
 
-		$statement->execute(
+		if($statement->execute(
 			[
 				':customer_ID' => $customer_row->customer_ID,
 				':name' => $customer_row->name,
 				':email' => $customer_row->email,
 				':phone' => $customer_row->phone		
 			]
-		);
+		)) {
+			return true;
+		}
 
-		$count = $statement->rowCount();
-		return $count;
+		return false;
 	}
 
 	public function createCustomer($customer_row) {

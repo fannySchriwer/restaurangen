@@ -23,7 +23,7 @@ if(!empty($data->booking_ID)) {
     
     $booking = new Booking($db);
     if($booking->deleteBooking($booking_ID)) {
-        echo json_encode(array('message' => 'Booking was deleted succesfully'));
+        echo json_encode(array('message' => 'Booking and customer was deleted successfully'));
     }
 }
 else {
