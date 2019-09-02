@@ -9,10 +9,8 @@ class Booking {
 
 	public function deleteBooking($booking_ID) {
 		$delete_booking = $this->connection->prepare(
-			'DELETE bookings, customers 
+			'DELETE
 			FROM bookings 
-			INNER JOIN customers 
-			ON bookings.customer_ID = customers.customer_ID 
 			WHERE booking_ID = :booking_ID'
 		);
 		
