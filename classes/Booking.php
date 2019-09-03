@@ -11,14 +11,13 @@ class Booking {
 		$delete_booking = $this->connection->prepare(
 			'DELETE
 			FROM bookings 
-			WHERE booking_ID = :booking_ID'
+			WHERE booking_ID = ?'
 		);
+
+		$booking_ID=htmlspecialchars(strip_tags($booking_ID));
+		$delete_booking->bindParam(1, $booking_ID);
 		
-		if($delete_booking->execute(
-			[
-				':booking_ID' => $booking_ID
-			]
-		)) {
+		if($delete_booking->execute()) {
 			return true;
 		}
 
@@ -32,16 +31,24 @@ class Booking {
 				guests = :guests, 
 				sitting = :sitting
 			WHERE booking_ID = :booking_ID'
-		);				
+		);	
+		
+		$booking_row->$customer_ID = htmlspecialchars(
+			strip_tags($booking_row->$customer_ID)
+		);
+		$booking_row->$guests = htmlspecialchars(
+			strip_tags($booking_row->$guests)
+		);
+		$booking_row->$sitting = htmlspecialchars(
+			strip_tags($booking_row->$sitting)
+		);
 
-		if($statement->execute(
-			[
-				':booking_ID' => $booking_row->booking_ID,
-				':customer_ID' => $booking_row->customer_ID,
-				':guests' => $booking_row->guests,
-				':sitting' => $booking_row->sitting				
-			]
-		)) {
+		$statement->bindParam(':customer_ID', $booking_row->customer_ID);
+		$statement->bindParam(':guests', $booking_row->guests);
+		$statement->bindParam(':sitting', $booking_row->sitting);
+		$statement->bindParam(':booking_ID', $booking_row->booking_ID);
+
+		if($statement->execute()) {
 			return true;
 		}
 
