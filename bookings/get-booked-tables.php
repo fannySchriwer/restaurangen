@@ -1,19 +1,18 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET");
+header('Content-Type: application/json');
+
 include_once '../DBConnection.php';
 include_once '../classes/Booking.php';
 
-// instantiate database
 $database = new Database();
 $db = $database->getConnection();
 
-// instantiate booking object/class with database
 $bookings = new Booking($db);
 
-// Takes raw data from the request
 $json = file_get_contents('php://input');
-
-// Converts it into a PHP object
 $data = json_decode($json); 
 
 if(!empty($data->date)) {
