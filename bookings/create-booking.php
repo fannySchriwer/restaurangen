@@ -45,7 +45,6 @@ if(
         
         if ($booking->createBooking($booking_row)) {
             http_response_code(201);
-
             echo json_encode(array('message' => 'Booking was also created.'));
         }
 

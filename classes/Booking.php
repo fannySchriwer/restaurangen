@@ -9,22 +9,20 @@ class Booking {
 
 	public function deleteBooking($booking_ID) {
 		$delete_booking = $this->connection->prepare(
-			'DELETE bookings, customers 
+			'DELETE
 			FROM bookings 
-			INNER JOIN customers 
-			ON bookings.customer_ID = customers.customer_ID 
 			WHERE booking_ID = :booking_ID'
 		);
 		
-		$delete_booking->execute(
+		if($delete_booking->execute(
 			[
 				':booking_ID' => $booking_ID
 			]
-		);
+		)) {
+			return true;
+		}
 
-		$count = $delete_booking->rowCount();
-
-		return $count;
+		return false;
 	}
 
 	public function updateBooking($booking_row) {
@@ -36,18 +34,18 @@ class Booking {
 			WHERE booking_ID = :booking_ID'
 		);				
 
-		$statement->execute(
+		if($statement->execute(
 			[
 				':booking_ID' => $booking_row->booking_ID,
 				':customer_ID' => $booking_row->customer_ID,
 				':guests' => $booking_row->guests,
 				':sitting' => $booking_row->sitting				
 			]
-		);
+		)) {
+			return true;
+		}
 
-		$count = $statement->rowCount();
-
-		return $count;
+		return false;
 	}
 
 	public function getBookedTables($date) {
