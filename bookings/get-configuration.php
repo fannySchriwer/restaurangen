@@ -1,13 +1,15 @@
 <?php
 
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET");
+header('Content-Type: application/json');
+
 include_once '../DBConnection.php';
 include_once '../classes/Configuration.php';
 
-// instantiate database
 $database = new Database();
 $db = $database->getConnection();
 
-// instantiate configuration object/class with database
 $configuration = new Configuration($db);
 
 $get_configuration = $configuration->getConfigurationTable();
