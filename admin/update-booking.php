@@ -15,18 +15,19 @@ $json = file_get_contents('php://input');
 $data = json_decode($json);
 
 $booking_row = new BookingRow();
+$customer_row = new CustomerRow();
 $booking = new Booking($db);
-    
+  
 $booking_row->booking_ID = $data->booking_ID;
 $booking_row->customer_ID = $data->customer_ID;
-$booking_row->email = $data->email;
+$customer_row->customer_ID = $data->customer_ID;
+$customer_row->email = $data->email;
 $booking_row->guests = $data->guests;
-$booking_row->name = $data->name;
-$booking_row->phone = $data->phone;
+$customer_row->name = $data->name;
+$customer_row->phone = $data->phone;
 $booking_row->sitting = $data->sitting;
 
-
-if($booking->updateBooking($booking_row)) {
+if($booking->updateBooking($booking_row, $customer_row)) {
     echo json_encode(array('message' => 'Booking was updated successfully'));
 } 
 

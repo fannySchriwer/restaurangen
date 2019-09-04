@@ -24,16 +24,16 @@ class Booking {
 		return false;
 	}
 
-	public function updateBooking($booking_row) {
+	public function updateBooking($booking_row, $customer_row) {
+		var_dump($booking_row, $customer_row);
 		$statement = $this->connection->prepare(
 			'UPDATE bookings 
-			SET customer_ID = :customer_ID, 
-				email = :email,
+			SET email = :email,
 				guests = :guests, 
 				name = :name,
 				phone = :phone,
 				sitting = :sitting
-			WHERE booking_ID = :booking_ID'
+			WHERE booking_ID = :booking_ID AND customer_ID = :customer_ID'
 		);	
 		
 		$booking_row->$booking_ID = htmlspecialchars(
@@ -42,28 +42,28 @@ class Booking {
 		$booking_row->$customer_ID = htmlspecialchars(
 			strip_tags($booking_row->$customer_ID)
 		);
-		$booking_row->$email = htmlspecialchars(
-			strip_tags($booking_row->$email)
+		$customer_row->$email = htmlspecialchars(
+			strip_tags($customer_row->$email)
 		);
 		$booking_row->$guests = htmlspecialchars(
 			strip_tags($booking_row->$guests)
 		);
-		$booking_row->$name = htmlspecialchars(
-			strip_tags($booking_row->$name)
+		$customer_row->$name = htmlspecialchars(
+			strip_tags($customer_row->$name)
 		);
-		$booking_row->$phone = htmlspecialchars(
-			strip_tags($booking_row->$phone)
+		$customer_row->$phone = htmlspecialchars(
+			strip_tags($customer_row->$phone)
 		);
 		$booking_row->$sitting = htmlspecialchars(
 			strip_tags($booking_row->$sitting)
 		);
 
-		$statement->bindParam(':customer_ID', $booking_row->customer_ID);
 		$statement->bindParam(':booking_ID', $booking_row->booking_ID);
-		$statement->bindParam(':email', $booking_row->email);
+		$statement->bindParam(':customer_ID', $booking_row->customer_ID);
+		$statement->bindParam(':email', $customer_row->email);
 		$statement->bindParam(':guests', $booking_row->guests);
-		$statement->bindParam(':name', $booking_row->name);
-		$statement->bindParam(':phone', $booking_row->phone);
+		$statement->bindParam(':name', $customer_row->name);
+		$statement->bindParam(':phone', $customer_row->phone);
 		$statement->bindParam(':sitting', $booking_row->sitting);
 
 		if($statement->execute()) {
