@@ -7,6 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
  
 include_once '../DBConnection.php';
 include_once '../classes/Booking.php';
+include_once '../classes/Customer.php';
  
 $database = new Database();
 $db = $database->getConnection();
@@ -14,20 +15,24 @@ $db = $database->getConnection();
 $json = file_get_contents('php://input');
 $data = json_decode($json);
 
-$booking_row = new BookingRow();
-$customer_row = new CustomerRow();
 $booking = new Booking($db);
-  
+
+$booking_row = new BookingRow();
 $booking_row->booking_ID = $data->booking_ID;
 $booking_row->customer_ID = $data->customer_ID;
+$booking_row->guests = $data->guests;
+$booking_row->sitting = $data->sitting;
+
+$customer_row = new CustomerRow();
 $customer_row->customer_ID = $data->customer_ID;
 $customer_row->email = $data->email;
-$booking_row->guests = $data->guests;
 $customer_row->name = $data->name;
 $customer_row->phone = $data->phone;
-$booking_row->sitting = $data->sitting;
 
 if($booking->updateBooking($booking_row, $customer_row)) {
     echo json_encode(array('message' => 'Booking was updated successfully'));
 } 
+else {
+    echo("false");
+}
 
