@@ -13,6 +13,7 @@ $booking = new Booking($db);
 
 $json = file_get_contents('php://input');
 $data = json_decode($json);
+var_dump($data);
 
 $booking_ID = $data->booking_ID;
 
