@@ -7,20 +7,37 @@ class Customer {
 		$this->connection = $db;
 	}
 
+	public function deleteCustomer($customer_ID) {
+		$statement = $this->connection->prepare(
+			'DELETE
+			FROM customers 
+			WHERE customer_ID = ?'
+		);
+
+		$customer_ID=htmlspecialchars(strip_tags($customer_ID));
+		$statement->bindParam(1, $customer_ID);
+		
+		if($statement->execute()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public function updateCustomer($customer_row) {
 		$statement = $this->connection->prepare(
-			'UPDATE customers 
+			"UPDATE customers 
 			SET name = :name, 
-				email = :email, 
-				phone = :phone 
-			WHERE customer_ID = :customer_ID');
-
+			email = :email, 
+			phone = :phone 
+			WHERE customer_ID = :customer_ID");
+		
 		if($statement->execute(
 			[
-				':customer_ID' => $customer_row->customer_ID,
-				':name' => $customer_row->name,
-				':email' => $customer_row->email,
-				':phone' => $customer_row->phone		
+				":customer_ID" => $customer_row->customer_ID,
+				":name" => $customer_row->name,
+				":email" => $customer_row->email,
+				":phone" => $customer_row->phone		
 			]
 		)) {
 			return true;
