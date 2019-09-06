@@ -1,8 +1,8 @@
 <?php
-
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Methods: GET");
-header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once '../DBConnection.php';
 include_once '../classes/Booking.php';
@@ -21,9 +21,9 @@ if(!empty($data->date)) {
 	if(!$get_free_bookings == []){
 		
 		$return_free_bookings = [];
-		$booking_row = new BookingRow();
 
 		for($i = 0; $i < count($get_free_bookings); $i++) {
+			$booking_row = new BookingRow();
 			$booking_row->booking_ID = $get_free_bookings[$i]['booking_ID'];
 			$booking_row->customer_ID = $get_free_bookings[$i]['customer_ID'];
 			$booking_row->guests = $get_free_bookings[$i]['guests'];
@@ -38,7 +38,7 @@ if(!empty($data->date)) {
 	}
 }
 else {
-	$return_free_bookings = null;
+	$return_free_bookings = [];
 	http_response_code(400);
 }
 
