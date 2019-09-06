@@ -38,7 +38,7 @@ class Customer {
 				":name" => $customer_row->name,
 				":email" => $customer_row->email,
 				":phone" => $customer_row->phone		
-			]
+			]	
 		)) {
 			return true;
 		}
