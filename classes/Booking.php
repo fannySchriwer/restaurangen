@@ -101,18 +101,12 @@ class Booking {
 			
 			$to			=   $customer_row->email;
             $subject    =   'La Casa Del Mar booking confirmation';
-            $message    =   'Dear ' . $customer_row->name . "\r\n" .
-							'Thank you for your booking!' . "\r\n" .
-							'Your booking reference number is : ' . $booking_row->$customer_ID . "\r\n" .
-							'If you require any further assistance, please do not hesitate to contact us on +46 070123 44 88.' "\r\n" .
-							'Kind regards,' "\r\n" .
-							'La Casa Del Mar' "\r\n";;
-            $headers    =   'From: bookings@lacasadelmar.com' . "\r\n" .
-                            'Reply-To: bookings@lacasadelmar.com' . "\r\n" .
-                            'X-Mailer: PHP/' . phpversion();
-            $headers[]  =   'Content-type: text/html\r\n; charset=iso-8859-1';
-        
-            mail($to, $subject, $message, $headers);
+			$message    =   'Dear ' . $customer_row->name . '\nThank you for your booking!\nYour booking reference number is : ' 
+							. $booking_row->booking_ID . '\nIf you require any further assistance, please do not hesitate to contact us on +46 070123 44 88.\nKind regards,\nLa Casa Del Mar';
+
+			$message	=	wordwrap($msg,70);
+
+            mail($to, $subject, $message);
 
 			return true;
 		}
