@@ -62,6 +62,7 @@ class Customer {
 		$statement->bindParam(':phone', $customer_row->phone);
 		
 		if($statement->execute()) {
+
 			return $this->connection->lastInsertId();
 		}
 	

@@ -1,5 +1,7 @@
 <?php
 
+include 'confirm-mail.php';
+
 class Booking {
 	private $connection;
 
@@ -91,9 +93,28 @@ class Booking {
 
 		$statement->bindParam(':customer_ID', $booking_row->customer_ID);
 		$statement->bindParam(':guests', $booking_row->guests);
-		$statement->bindParam(':sitting', $booking_row->sitting);
+		$statement->bindParam(':sitting', $booking_row->sitting); 
 
 		if ($statement->execute()) {
+
+			// $confirm = new Mailer();
+			// $confirm->sendEmail($booking_row, $customer_row);
+
+			$msg = "First line of text\nSecond line of text";
+
+			// use wordwrap() if lines are longer than 70 characters
+			$msg = wordwrap($msg,70);
+
+			// send email
+            mail("sygiel@hotmail.com","My subject",$msg);
+            
+            // if(mail("sygiel@hotmail.com","My subject",$msg)) {
+            //     echo("Email sent");
+            // }
+            // else {
+            //     echo('not sent');
+            // }
+
 			return true;
 		}
 

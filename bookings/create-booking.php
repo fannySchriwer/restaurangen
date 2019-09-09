@@ -43,12 +43,13 @@ if(
         $booking_row->guests = $data->guests;
         $booking_row->sitting = $data->sitting;
         
-        if ($booking->createBooking($booking_row)) {
+        if ($booking->createBooking($booking_row, $customer_row)) {
             http_response_code(201);
             echo json_encode(array('message' => 'Booking was also created.'));
         }
 
         echo json_encode(array('message' => 'Customer was created.'));
+        
     }
     else {
         http_response_code(503);
