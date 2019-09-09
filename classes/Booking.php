@@ -1,5 +1,6 @@
 <?php
 
+//Error dump for mail testing: Tom
 error_reporting(-1);
 ini_set('display_errors', 'On');
 set_error_handler("var_dump");
@@ -101,10 +102,12 @@ class Booking {
 			
 			$to			=   $customer_row->email;
             $subject    =   'La Casa Del Mar booking confirmation';
-			$message    =   'Dear ' . $customer_row->name . '\nThank you for your booking!\nYour booking reference number is : ' 
-							. $booking_row->booking_ID . '\nIf you require any further assistance, please do not hesitate to contact us on +46 070123 44 88.\nKind regards,\nLa Casa Del Mar';
+			$message    =   'Thank you for your booking!\n
+							If you require any further assistance, please do not hesitate to contact us on +46 070123 44 88.\n
+							Kind regards,\n
+							La Casa Del Mar';
 
-			$message	=	wordwrap($msg,70);
+			$message	=	wordwrap($message,70);
 
             mail($to, $subject, $message);
 
