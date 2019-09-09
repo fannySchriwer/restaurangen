@@ -44,10 +44,13 @@ if(
         http_response_code(201);
         echo json_encode(array('message' => 'Customer was created/customer id were fetched.'));
         
-        if ($booking->createBooking($booking_row)) {
+        if ($booking->createBooking($booking_row, $customer_row)) {
             http_response_code(201);
             echo json_encode(array('message' => 'Booking was created.'));
         }
+
+        echo json_encode(array('message' => 'Customer was created.'));
+     
     }
     else {
         http_response_code(503);

@@ -105,6 +105,7 @@ class Customer {
 			
 			}
 		} 
+
 }
 
 class CustomerRow {
