@@ -28,10 +28,8 @@ if(
     $customer_row->email = $data->email;
     $customer_row->phone = $data->phone;
 
-    // save the last insert id
+    // save the last used id
     if($lastId = $customer->createCustomer($customer_row)) {
-        http_response_code(201);
-
         $booking = new Booking($db);
 
         $booking_row = new BookingRow();
@@ -42,13 +40,14 @@ if(
         // setting the rest of properties regularly with data from post-req
         $booking_row->guests = $data->guests;
         $booking_row->sitting = $data->sitting;
+
+        http_response_code(201);
+        echo json_encode(array('message' => 'Customer was created/customer id were fetched.'));
         
         if ($booking->createBooking($booking_row)) {
             http_response_code(201);
-            echo json_encode(array('message' => 'Booking was also created.'));
+            echo json_encode(array('message' => 'Booking was created.'));
         }
-
-        echo json_encode(array('message' => 'Customer was created.'));
     }
     else {
         http_response_code(503);
