@@ -1,9 +1,9 @@
 <?php
 
 //Error dump for mail testing: Tom
-error_reporting(-1);
-ini_set('display_errors', 'On');
-set_error_handler("var_dump");
+// error_reporting(-1);
+// ini_set('display_errors', 'On');
+// set_error_handler("var_dump");
 
 class Booking {
 	private $connection;
@@ -23,6 +23,22 @@ class Booking {
 		$statement->bindParam(1, $booking_ID);
 		
 		if($statement->execute()) {
+
+			// $to			=   $customer_row->email;
+			// $subject    =   "La Casa Del Mar booking cancellation";
+			// $message    =   "As requested, your recent booking with us has been cancelled!\n
+			// 				Please see details below:\n"
+			// 				. $customer_row->name . "\n"
+			// 				. $booking_row->guests . "\n"
+			// 				. $booking_row->sitting . "\n
+			// 				We hope to see you soon!\n
+			// 				Kind regards,\n
+			// 				La Casa Del Mar";
+
+			// $message	=	wordwrap($message,70);
+
+			// mail($to, $subject, $message);
+
 			return true;
 		}
 
@@ -47,6 +63,25 @@ class Booking {
 				":sitting" => $booking_row->sitting				
 			]
 			)) {
+
+				// $to			=   $customer_row->email;
+				// $subject    =   "La Casa Del Mar booking update";
+				// $message    =   "Your recent booking with us has been updated!\n
+				// 				Please see details below:\n"
+				// 				. $customer_row->name . "\n"
+				// 				. $booking_row->guests . "\n"
+				// 				. $booking_row->sitting . "\n
+				// 				If you require any further assistance, please do not hesitate to contact us on +46 070123 44 88.\n
+				// 				To cancel your booking, please click the link below:\n
+								
+				// 				Kind regards,\n
+				// 				La Casa Del Mar";
+
+				// $message	=	wordwrap($message,70);
+
+				// mail($to, $subject, $message);
+
+
 				return true;
 			}
 	
@@ -101,11 +136,11 @@ class Booking {
 		if ($statement->execute()) {
 			
 			$to			=   $customer_row->email;
-            $subject    =   'La Casa Del Mar booking confirmation';
-			$message    =   'Thank you for your booking!\n
+            $subject    =   "La Casa Del Mar booking confirmation";
+			$message    =   "Thank you for your booking!\n
 							If you require any further assistance, please do not hesitate to contact us on +46 070123 44 88.\n
 							Kind regards,\n
-							La Casa Del Mar';
+							La Casa Del Mar";
 
 			$message	=	wordwrap($message,70);
 
@@ -124,3 +159,5 @@ class BookingRow {
 	public $guests;
 	public $sitting;
 }
+
+// http://localhost/admin/delete-booking.php/?booking_ID=" . $booking_ID . "\n
