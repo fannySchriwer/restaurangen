@@ -17,7 +17,7 @@ var_dump($data);
 
 $booking_ID = $data->booking_ID;
 
-if($booking->deleteBooking($booking_ID)) {
+if($booking->deleteBooking($booking_ID, $booking_row, $customer_row)) {
     echo "Success";
 }
 else {

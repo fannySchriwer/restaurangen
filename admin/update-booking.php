@@ -22,7 +22,7 @@ $booking_row->customer_ID = $data->customer_ID;
 $booking_row->guests = $data->guests;
 $booking_row->sitting = $data->sitting;
 
-if($booking->updateBooking($booking_row)) {
+if($booking->updateBooking($booking_row, $customer_row)) {
     echo json_encode(array('message' => 'Booking was updated successfully'));
 } 
 else {
