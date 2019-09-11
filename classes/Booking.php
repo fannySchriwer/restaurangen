@@ -1,10 +1,5 @@
 <?php
 
-//Error dump for mail testing: Tom
-// error_reporting(-1);
-// ini_set('display_errors', 'On');
-// set_error_handler("var_dump");
-
 class Booking {
 	private $connection;
 
@@ -12,7 +7,7 @@ class Booking {
 		$this->connection = $db;
 	}
 
-	public function deleteBooking($booking_ID) {
+	public function deleteBooking($booking_ID, $booking_row, $customer_row) {
 		$statement = $this->connection->prepare(
 			'DELETE
 			FROM bookings 
@@ -24,20 +19,38 @@ class Booking {
 		
 		if($statement->execute()) {
 
-			// $to			=   $customer_row->email;
-			// $subject    =   "La Casa Del Mar booking cancellation";
-			// $message    =   "As requested, your recent booking with us has been cancelled!\n
-			// 				Please see details below:\n"
-			// 				. $customer_row->name . "\n"
-			// 				. $booking_row->guests . "\n"
-			// 				. $booking_row->sitting . "\n
-			// 				We hope to see you soon!\n
-			// 				Kind regards,\n
-			// 				La Casa Del Mar";
+			// Booking deleted mail
+			$to			=   $customer_row->email;
+			$subject    =   'La Casa Del Mar booking cancellation';
+			$from		=	'bookings@lacasadelmar.com';
+			
+			$headers 	 =	'MIME-Version: 1.0' . "\r\n";
+			$headers	.=	'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		
+			$headers	.=	'From: '.$from."\r\n".
+							'Reply-To: '.$from."\r\n" .
+							'X-Mailer: PHP/' . phpversion();
 
-			// $message	=	wordwrap($message,70);
+			$message	 =	'<html><body>';
+			$message	.=	'<h1>Hi ' . $customer_ID->name . '!</h1>';
+			$message	.=	'<p>As requested, your recent booking with us has been cancelled!</p>';
+			$message	.=	'<p>Please see details below:</p>';
+			$message	.=	'<p>' . $customer_row->name . '</p>';
+			$message	.=	'<p>' . $booking_row->guests . '</p>';
+			$message	.=	'<p>' . $booking_row->sitting . '</p>';
+			$message	.=	'<p>If you are receiving this cancellation email by mistake, please do not hesitate to contact us on +46 070123 44 88.</p>';
+			$message	.=	'<p>We hope to see you soon!/p>';
+			$message	.=	'<p>Kind regards,</p>';
+			$message	.=	'<p>La Casa Del Mar</p>';
+			$message	.=	'</body></html>';
 
-			// mail($to, $subject, $message);
+			$message	=	wordwrap($message,70);
+			
+			if(mail($to, $subject, $message, $headers)){
+				echo 'Your mail has been sent successfully.';
+			} else{
+				echo 'Unable to send email. Please try again.';
+			}
 
 			return true;
 		}
@@ -45,7 +58,7 @@ class Booking {
 		return false;
 	}
 
-	public function updateBooking($booking_row) {
+	public function updateBooking($booking_row, $customer_row) {
 		
 		$statement = $this->connection->prepare(
 			"UPDATE bookings 
@@ -63,24 +76,40 @@ class Booking {
 				":sitting" => $booking_row->sitting				
 			]
 			)) {
+				// Booking update confirmation mail
+				$to			=   $customer_row->email;
+				$subject    =   'La Casa Del Mar booking update';
+				$from		=	'bookings@lacasadelmar.com';
+				
+				$headers 	 =	'MIME-Version: 1.0' . "\r\n";
+				$headers	.=	'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			
+				$headers	.=	'From: '.$from."\r\n".
+								'Reply-To: '.$from."\r\n" .
+								'X-Mailer: PHP/' . phpversion();
 
-				// $to			=   $customer_row->email;
-				// $subject    =   "La Casa Del Mar booking update";
-				// $message    =   "Your recent booking with us has been updated!\n
-				// 				Please see details below:\n"
-				// 				. $customer_row->name . "\n"
-				// 				. $booking_row->guests . "\n"
-				// 				. $booking_row->sitting . "\n
-				// 				If you require any further assistance, please do not hesitate to contact us on +46 070123 44 88.\n
-				// 				To cancel your booking, please click the link below:\n
-								
-				// 				Kind regards,\n
-				// 				La Casa Del Mar";
+				$message	 =	'<html><body>';
+				$message	.=	'<h1>Hi ' . $customer_ID->name . '!</h1>';
+				$message	.=	'<p>Your recent booking with us has been updated!</p>';
+				$message	.=	'<p>Please see details below:</p>';
+				$message	.=	'<p>' . $customer_row->name . '</p>';
+				$message	.=	'<p>' . $booking_row->guests . '</p>';
+				$message	.=	'<p>' . $booking_row->sitting . '</p>';
+				$message	.=	'<p>If you require any assistance, please do not hesitate to contact us on +46 070123 44 88.</p>';
+				$message	.=	'<p>To cancel your booking, please click the link below</p>';
+				$message	.=	'<p><a href="http://localhost/admin/delete-booking.php/?booking_ID=$booking_ID">Cancel booking 1</a></p>';
+				$message	.=	'<p><a href="http://localhost/admin/delete-booking.php/?booking_ID=$booking_row->booking_ID">Cancel booking 2</a></p>';
+				$message	.=	'<p>Kind regards,</p>';
+				$message	.=	'<p>La Casa Del Mar</p>';
+				$message	.=	'</body></html>';
 
-				// $message	=	wordwrap($message,70);
-
-				// mail($to, $subject, $message);
-
+				$message	=	wordwrap($message,70);
+				
+				if(mail($to, $subject, $message, $headers)){
+					echo 'Your mail has been sent successfully.';
+				} else{
+					echo 'Unable to send email. Please try again.';
+				}
 
 				return true;
 			}
@@ -118,7 +147,7 @@ class Booking {
 		return $all_bookings;
 	}
 
-	public function createBooking($booking_row, $customer_row) {
+	public function createBooking($booking_row, $customer_row, $booking_ID) {
 		$statement = $this->connection->prepare(
 			'INSERT INTO bookings (customer_ID, guests, sitting) 
 			VALUES (:customer_ID, :guests, :sitting)'
@@ -134,17 +163,37 @@ class Booking {
 		$statement->bindParam(':sitting', $booking_row->sitting); 
 
 		if ($statement->execute()) {
-			
+
+			// Booking confirmation mail
 			$to			=   $customer_row->email;
-            $subject    =   "La Casa Del Mar booking confirmation";
-			$message    =   "Thank you for your booking!\n
-							If you require any further assistance, please do not hesitate to contact us on +46 070123 44 88.\n
-							Kind regards,\n
-							La Casa Del Mar";
+			$subject    =   'La Casa Del Mar booking confirmation';
+			$from		=	'bookings@lacasadelmar.com';
+			
+			$headers 	 =	'MIME-Version: 1.0' . "\r\n";
+			$headers	.=	'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		
+			$headers	.=	'From: '.$from."\r\n".
+							'Reply-To: '.$from."\r\n" .
+							'X-Mailer: PHP/' . phpversion();
+
+			$message	 =	'<html><body>';
+			$message	.=	'<h1>Hi ' . $customer_ID->name . '!</h1>';
+			$message	.=	'<p>Thank you for your booking! Booking reference number: ' . $booking_row->booking_ID . '</p>';
+			$message	.=	'<p>If you require any assistance, please do not hesitate to contact us on +46 070123 44 88.</p>';
+			$message	.=	'<p>To cancel your booking, please click the link below</p>';
+			$message	.=	'<p><a href="http://localhost/admin/delete-booking.php/?booking_ID=$booking_ID">Cancel booking 1</a></p>';
+			$message	.=	'<p><a href="http://localhost/admin/delete-booking.php/?booking_ID=$booking_row->booking_ID">Cancel booking 2</a></p>';
+			$message	.=	'<p>Kind regards,</p>';
+			$message	.=	'<p>La Casa Del Mar</p>';
+			$message	.=	'</body></html>';
 
 			$message	=	wordwrap($message,70);
-
-            mail($to, $subject, $message);
+			
+			if(mail($to, $subject, $message, $headers)){
+				echo 'Your mail has been sent successfully.';
+			} else{
+				echo 'Unable to send email. Please try again.';
+			}
 
 			return true;
 		}
@@ -159,5 +208,3 @@ class BookingRow {
 	public $guests;
 	public $sitting;
 }
-
-// http://localhost/admin/delete-booking.php/?booking_ID=" . $booking_ID . "\n
