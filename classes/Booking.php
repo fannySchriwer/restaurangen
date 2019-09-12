@@ -94,9 +94,6 @@ class Booking {
 				$message	.=	'<p>' . $booking_row->guests . '</p>';
 				$message	.=	'<p>' . $booking_row->sitting . '</p>';
 				$message	.=	'<p>If you require any assistance, please do not hesitate to contact us on +46 070123 44 88.</p>';
-				$message	.=	'<p>To cancel your booking, please click the link below</p>';
-				$message	.=	'<p><a href="http://localhost/admin/delete-booking.php/?booking_ID=$booking_ID">Cancel booking 1</a></p>';
-				$message	.=	'<p><a href="http://localhost/admin/delete-booking.php/?booking_ID=$booking_row->booking_ID">Cancel booking 2</a></p>';
 				$message	.=	'<p>Kind regards,</p>';
 				$message	.=	'<p>La Casa Del Mar</p>';
 				$message	.=	'</body></html>';
@@ -177,9 +174,6 @@ class Booking {
 			$message	.=	'<h1>Hi ' . $customer_ID->name . '!</h1>';
 			$message	.=	'<p>Thank you for your booking! Booking reference number: ' . $booking_row->booking_ID . '</p>';
 			$message	.=	'<p>If you require any assistance, please do not hesitate to contact us on +46 070123 44 88.</p>';
-			$message	.=	'<p>To cancel your booking, please click the link below</p>';
-			$message	.=	'<p><a href="http://localhost/admin/delete-booking.php/?booking_ID=$booking_ID">Cancel booking 1</a></p>';
-			$message	.=	'<p><a href="http://localhost/admin/delete-booking.php/?booking_ID=$booking_row->booking_ID">Cancel booking 2</a></p>';
 			$message	.=	'<p>Kind regards,</p>';
 			$message	.=	'<p>La Casa Del Mar</p>';
 			$message	.=	'</body></html>';
