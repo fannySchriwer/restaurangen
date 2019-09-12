@@ -1,8 +1,8 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: DELETE");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: DELETE');
+header('Content-Type: application/json; charset=UTF-8');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
  
 include_once '../DBConnection.php';
 include_once '../classes/Booking.php';
@@ -18,10 +18,12 @@ var_dump($data);
 $booking_ID = $data->booking_ID;
 
 if($booking->deleteBooking($booking_ID, $booking_row, $customer_row)) {
-    echo "Success";
+
+    echo 'Success';
 }
 else {
-    echo "No success";
+
+    echo 'No success';
 }
 
 

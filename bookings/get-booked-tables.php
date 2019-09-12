@@ -1,8 +1,8 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST');
+header('Content-Type: application/json; charset=UTF-8');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
 include_once '../DBConnection.php';
 include_once '../classes/Booking.php';
@@ -31,13 +31,16 @@ if(!empty($data->date)) {
 
 			array_push($return_free_bookings, $booking_row);
 		}
+
 		http_response_code(200);
 	}
 	else {
+
 		http_response_code(204);
 	}
 }
 else {
+	
 	$return_free_bookings = [];
 	http_response_code(400);
 }

@@ -8,8 +8,8 @@ class Configuration {
 	}
 
 	public function getConfigurationTable() {
-		$statement = $this->connection->prepare('
-			SELECT * FROM configuration'
+		$statement = $this->connection->prepare(
+			'SELECT * FROM configuration'
 		);
 			
 		$statement->execute([]);
