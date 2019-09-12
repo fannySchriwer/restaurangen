@@ -1,9 +1,9 @@
 <?php
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: PUT");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json; charset=UTF-8');
+header('Access-Control-Allow-Methods: PUT');
+header('Access-Control-Max-Age: 3600');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
  
 // include database and object file
 include_once '../DBConnection.php';
@@ -25,5 +25,6 @@ $customer_row->email = $data->email;
 $customer_row->phone = $data->phone;
 
 if($customer->updateCustomer($customer_row)) {
-    echo("Updates customer successfully");
+    
+    echo('Updates customer successfully');
 }

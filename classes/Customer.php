@@ -18,6 +18,7 @@ class Customer {
 				$statement->bindParam(1, $customer_ID);
 				
 				if($statement->execute()) {
+
 						return true;
 				}
 
@@ -26,31 +27,32 @@ class Customer {
 
 		public function updateCustomer($customer_row) {
 				$statement = $this->connection->prepare(
-						"UPDATE customers 
+						'UPDATE customers 
 						SET name = :name, 
 						email = :email, 
 						phone = :phone 
-						WHERE customer_ID = :customer_ID"
+						WHERE customer_ID = :customer_ID'
 				);
 				
 				if($statement->execute(
 						[
-								":customer_ID" => $customer_row->customer_ID,
-								":name" => $customer_row->name,
-								":email" => $customer_row->email,
-								":phone" => $customer_row->phone		
+							':customer_ID' => $customer_row->customer_ID,
+							':name' => $customer_row->name,
+							':email' => $customer_row->email,
+							':phone' => $customer_row->phone		
 						]	
 				)) {
-						return true;
-				}
 
-				return false;																		
+					return true;
+				}
+				
+			return false;																		
 		}
 
 		public function createCustomer($customer_row) {
 			// Check if customer with entered email already exist
 			$statement = $this->connection->prepare(
-					"SELECT COUNT(email) AS num FROM customers WHERE email = :email"
+					'SELECT COUNT(email) AS num FROM customers WHERE email = :email'
 			);
 
 			$statement->bindParam(':email', $customer_row->email);
@@ -60,13 +62,13 @@ class Customer {
 			$customer_emails = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 			foreach ($customer_emails as $customer_email) { 
-					$email_count = $customer_email["num"];
+					$email_count = $customer_email['num'];
 			}
 			
 			// If email exists, simply find and return that customers id
 			if ($email_count) {
 					$statement = $this->connection->prepare(
-							"SELECT customer_ID FROM `customers` WHERE email = :email"
+							'SELECT customer_ID FROM `customers` WHERE email = :email'
 					);
 
 					$statement->bindParam(':email', $customer_row->email);
@@ -76,7 +78,7 @@ class Customer {
 					$raw_customer_data = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 					foreach ($raw_customer_data as $customer_row) {
-							$costumer_ID = $customer_row["customer_ID"];
+							$costumer_ID = $customer_row['customer_ID'];
 					}
 
 					return $costumer_ID;

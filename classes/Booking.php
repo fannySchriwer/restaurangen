@@ -18,7 +18,6 @@ class Booking {
 		$statement->bindParam(1, $booking_ID);
 		
 		if($statement->execute()) {
-
 			// Booking deleted mail
 			$to			=   $customer_row->email;
 			$subject    =   'La Casa Del Mar booking cancellation';
@@ -46,7 +45,7 @@ class Booking {
 
 			$message	=	wordwrap($message,70);
 			
-			if(mail($to, $subject, $message, $headers)){
+			if(mail($to, $subject, $message, $headers)) {
 				echo 'Your mail has been sent successfully.';
 			} else{
 				echo 'Unable to send email. Please try again.';
@@ -59,7 +58,6 @@ class Booking {
 	}
 
 	public function updateBooking($booking_row, $customer_row) {
-		
 		$statement = $this->connection->prepare(
 			"UPDATE bookings 
 			SET customer_ID = :customer_ID, 
@@ -105,7 +103,7 @@ class Booking {
 
 				$message	=	wordwrap($message,70);
 				
-				if(mail($to, $subject, $message, $headers)){
+				if(mail($to, $subject, $message, $headers)) {
 					echo 'Your mail has been sent successfully.';
 				} else{
 					echo 'Unable to send email. Please try again.';
@@ -163,7 +161,6 @@ class Booking {
 		$statement->bindParam(':sitting', $booking_row->sitting); 
 
 		if ($statement->execute()) {
-
 			// Booking confirmation mail
 			$to			=   $customer_row->email;
 			$subject    =   'La Casa Del Mar booking confirmation';
@@ -189,7 +186,7 @@ class Booking {
 
 			$message	=	wordwrap($message,70);
 			
-			if(mail($to, $subject, $message, $headers)){
+			if(mail($to, $subject, $message, $headers)) {
 				echo 'Your mail has been sent successfully.';
 			} else{
 				echo 'Unable to send email. Please try again.';

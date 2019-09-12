@@ -1,9 +1,9 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: PUT");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json; charset=UTF-8');
+header('Access-Control-Allow-Methods: PUT');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
  
 include_once '../DBConnection.php';
 include_once '../classes/Booking.php';
@@ -23,9 +23,11 @@ $booking_row->guests = $data->guests;
 $booking_row->sitting = $data->sitting;
 
 if($booking->updateBooking($booking_row, $customer_row)) {
+    
     echo json_encode(array('message' => 'Booking was updated successfully'));
 } 
 else {
-    echo("false");
+
+    echo('false');
 }
 
